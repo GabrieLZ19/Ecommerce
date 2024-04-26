@@ -1,7 +1,5 @@
 import { productsToPreLoad } from "../../helpers/productos";
 import Cards from "../Cards/Cards";
-//styles
-import "tailwindcss/tailwind.css";
 
 const GridCards: React.FC = () => {
   return (

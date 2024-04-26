@@ -1,11 +1,13 @@
-const Cards: React.FC = ({
+import { IProducto } from "@/interfaces/IProducto";
+
+const Cards: React.FC<IProducto> = ({
   name,
   description,
   price,
   stock,
   image,
   categoryId,
-}: any) => {
+}) => {
   return (
     <div className="bg-gray-900 text-white rounded-lg shadow-md">
       <img src={image} alt={name} className="w-full h-auto rounded-t-lg" />
