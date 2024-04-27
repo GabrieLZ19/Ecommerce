@@ -1,33 +1,52 @@
-//styles
-import "tailwindcss/tailwind.css";
+"use client";
 
+import { useState } from "react";
 const NavBar: React.FC = () => {
-  return (
-    <nav>
-      <img src="./public/Logo.png" alt="logo" style={{ width: "100px" }} />
+  const [menuOpen, setMenuOpen] = useState(false);
 
-      <ul>
-        <li>Productos</li>
-        <li>Categorías</li>
-        <li>Populares</li>
-        <li>
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  return (
+    <nav className="flex flex-col md:flex-row md:items-center md:justify-around text-white border-b border-gray-400">
+      <div className="flex items-center justify-between w-full md:w-auto px-4 py-2">
+        <img src="/Logo.png" alt="logo" className="w-20" />
+        <button className="md:hidden" onClick={toggleMenu}>
+          {menuOpen ? "Cerrar" : "Menu"}
+        </button>
+      </div>
+
+      <div
+        className={`md:flex ${
+          menuOpen ? "flex" : "hidden"
+        } w-full md:w-80% flex-col md:flex-row md:justify-around md:items-center`}
+      >
+        <ul className="flex flex-col items-center w-full px-4 py-2 md:flex-row  md:justify-around md:items-center md:w-1/2 ">
+          <li className="py-2">Productos</li>
+          <li className="py-2">Categorías</li>
+          <li className="py-2">Populares</li>
+        </ul>
+
+        <div className="relative flex items-center justify-center">
+          <input
+            type="text"
+            className="rounded bg-transparent border pr-7 py-1 text-sm"
+          />
           <img
-            src="./public/search.svg"
+            src="/search.svg"
             alt="search"
-            style={{ cursor: "pointer" }}
+            className="absolute right-20 h-8 cursor-pointer p-2 mr-1 md:right-0 md:mr-0"
           />
-        </li>
-        <li>
-          <img
-            src="./public/carrito.svg"
-            alt="carrito"
-            style={{ cursor: "pointer" }}
-          />
-        </li>
-        <li>
-          <button>Login</button>
-        </li>
-      </ul>
+        </div>
+
+        <div className="pt-5 flex items-center justify-center md:pt-0">
+          <img src="/carrito.svg" alt="carrito" />
+        </div>
+        <div className="flex justify-center pt-5 md:pt-0">
+          <button className="md:ml-4">Login</button>
+        </div>
+      </div>
     </nav>
   );
 };

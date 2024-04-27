@@ -1,11 +1,11 @@
-import Home from "../app/Home/page";
+import HomePage from "../app/Home/page";
 import NavBar from "../components/NavBar/NavBar";
 
-export default function Page() {
+export default function Home() {
   return (
     <>
       <NavBar />
-      <Home />
+      <HomePage />
     </>
   );
 }
