@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const Detalle = () => {
+const Detalle = ({ params }) => {
   const [number, setNumber] = useState(1);
 
   const decrementNumber = () => {
@@ -23,7 +23,7 @@ const Detalle = () => {
       </div>
       <div className="border-l border-gray-600 px-10  w-2/5 bg-cyan-300">
         <div>
-          <h1 className="mb-5 text-2xl">Anbernic-RG35xx</h1>
+          <h1 className="mb-5 text-2xl">Anbernic-RG35xx:{params.detalle} </h1>
           <h2 className="mb-5 ">Precio $3000</h2>
         </div>
         <div className="flex">
