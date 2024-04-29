@@ -1,3 +1,5 @@
+import Carrusel from "@/components/Carrusel/Carrusel";
+
 const Home: React.FC = () => {
   return (
     <>
@@ -8,15 +10,16 @@ const Home: React.FC = () => {
         <div className="bg-black border rounded-full w-5 h-5 absolute bottom-2 right-5"></div>
       </div>
 
-      <h1 className="bg-gradient-to-r from-indigo-500">
+      <h1 className="bg-gradient-to-r from-pink-200 to-purple-500 bg-clip-text text-transparent text-4xl text-center mt-5">
         ¿Cual sera tu proxima experiencia?
       </h1>
-      <p>
+      <p className="text-center text-sm mt-3">
         Juega de forma portatil donde y cuando quieras
         <br />
         con nuestras consolas, tus horas de ocio estan aseguradas
       </p>
-      <button>Registrate</button>
+
+      <Carrusel />
     </>
   );
 };

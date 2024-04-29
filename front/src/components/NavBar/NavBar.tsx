@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+
 const NavBar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -9,9 +11,11 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className="flex flex-col md:flex-row md:items-center md:justify-around text-white border-b border-gray-400">
+    <nav className="flex flex-col md:flex-row md:items-center md:justify-around text-white border-b border-gray-600">
       <div className="flex items-center justify-between w-full md:w-auto px-4 py-2">
-        <img src="/Logo.png" alt="logo" className="w-20" />
+        <Link href="/Home">
+          <img src="/Logo.png" alt="logo" className="w-20" />
+        </Link>
         <button className="md:hidden" onClick={toggleMenu}>
           {menuOpen ? "Cerrar" : "Menu"}
         </button>
@@ -36,7 +40,7 @@ const NavBar: React.FC = () => {
           <img
             src="/search.svg"
             alt="search"
-            className="absolute right-20 h-8 cursor-pointer p-2 mr-1 md:right-0 md:mr-0"
+            className="absolute right-20 h-8 cursor-pointer p-2 mr-44 md:right-0 md:mr-0"
           />
         </div>
 
@@ -44,7 +48,9 @@ const NavBar: React.FC = () => {
           <img src="/carrito.svg" alt="carrito" />
         </div>
         <div className="flex justify-center pt-5 md:pt-0">
-          <button className="md:ml-4">Login</button>
+          <button className="md:ml-4 bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl">
+            Login
+          </button>
         </div>
       </div>
     </nav>
