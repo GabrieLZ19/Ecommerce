@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
   return (
     <nav className="flex flex-col md:flex-row md:items-center md:justify-around text-white border-b border-gray-600">
       <div className="flex items-center justify-between w-full md:w-auto px-4 py-2">
-        <Link href="/Home">
+        <Link href="/">
           <img src="/Logo.png" alt="logo" className="w-20" />
         </Link>
         <button className="md:hidden" onClick={toggleMenu}>
