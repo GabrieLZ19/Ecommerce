@@ -1,7 +1,9 @@
+import GridCards from "@/components/GridCards/GridCard";
+
 const Productos = () => {
   return (
     <div>
-      <p>productos</p>
+      <GridCards />
     </div>
   );
 };

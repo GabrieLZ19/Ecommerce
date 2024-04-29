@@ -36,7 +36,9 @@ const NavBar: React.FC = () => {
         } w-full md:w-80% flex-col md:flex-row md:justify-around md:items-center`}
       >
         <ul className="flex flex-col items-center w-full px-4 py-2 md:flex-row  md:justify-around md:items-center md:w-1/2 ">
-          <li className="py-2">Productos</li>
+          <Link href="Productos">
+            <li className="py-2">Productos</li>{" "}
+          </Link>
 
           <li
             className="py-2 cursor-pointer"

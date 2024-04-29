@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const Detalle = ({ params }) => {
+const Detalle = ({ params }: { params: { detalle: string } }) => {
   const [number, setNumber] = useState(1);
 
   const decrementNumber = () => {
