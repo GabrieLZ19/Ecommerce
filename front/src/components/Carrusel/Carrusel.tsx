@@ -3,7 +3,7 @@ import { Carousel } from "flowbite-react";
 
 const Carrusel = () => {
   return (
-    <div className="flex justify-center items-center m-auto h-56 sm:h-80 xl:h-80 2xl:h-96 w-1/2 mt-10 relative">
+    <div className="flex justify-center items-center m-auto h-56 sm:h-80 xl:h-80 2xl:h-96 w-1/2 mt-32 relative">
       <Carousel>
         <Link href="/Productos">
           <img

@@ -1,4 +1,5 @@
 import Carrusel from "@/components/Carrusel/Carrusel";
+import SeccionProducts from "@/components/SeccionProducts/SeccionProducts";
 
 const Home: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
         <br />
         con nuestras consolas, tus horas de ocio estan aseguradas
       </p>
-
+      <SeccionProducts />
       <Carrusel />
     </>
   );

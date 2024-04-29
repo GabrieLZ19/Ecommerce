@@ -1,5 +1,7 @@
+import GridCards from "@/components/GridCards/GridCard";
+
 const Consolas = () => {
-  return <div>consolas</div>;
+  return <GridCards />;
 };
 
 export default Consolas;

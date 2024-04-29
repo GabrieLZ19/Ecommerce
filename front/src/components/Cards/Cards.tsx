@@ -1,4 +1,5 @@
 import { IProducto } from "@/interfaces/IProducto";
+import Link from "next/link";
 
 const Cards: React.FC<IProducto> = ({
   name,
@@ -19,9 +20,11 @@ const Cards: React.FC<IProducto> = ({
         <p className="text-gray-300 mb-2 text-xs">{description}</p>
         <p className="text-green-300 font-bold">${price}</p>
         <p className="text-gray-300 mt-2">Stock: {stock}</p>
-        <button className="border-2 border-orange-400 text-orange-400 px-4 py-2 rounded-md mt-4 ">
-          Comprar
-        </button>
+        <Link href="#">
+          <button className="border-2 border-orange-400 text-orange-400 px-4 py-2 rounded-md mt-4 ">
+            Comprar
+          </button>
+        </Link>
       </div>
     </div>
   );
