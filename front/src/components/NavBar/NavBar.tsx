@@ -36,7 +36,7 @@ const NavBar: React.FC = () => {
         } w-full md:w-80% flex-col md:flex-row md:justify-around md:items-center`}
       >
         <ul className="flex flex-col items-center w-full px-4 py-2 md:flex-row  md:justify-around md:items-center md:w-1/2 ">
-          <Link href="Productos">
+          <Link href="/Productos">
             <li className="py-2">Productos</li>{" "}
           </Link>
 
@@ -86,7 +86,9 @@ const NavBar: React.FC = () => {
         </div>
 
         <div className="pt-5 flex items-center justify-center md:pt-0 md:mr-40">
-          <img src="/carrito.svg" alt="carrito" />
+          <Link href="/Carrito">
+            <img src="/carrito.png" alt="carrito" className="w-5" />
+          </Link>
         </div>
         <div className="flex justify-center pt-5 md:pt-0">
           <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl mb-5 md:mb-0 md:mr-10">

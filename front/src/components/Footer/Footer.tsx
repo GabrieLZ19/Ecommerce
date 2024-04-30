@@ -3,7 +3,7 @@ const Footer = () => {
     <footer className="bg-gradient-to-t from-gray-900 via-gray-800 to-black border-t border-gray-600 pt-5 mt-10">
       <div className="container mx-auto flex flex-row items-center justify-around">
         <div>
-          <h3 className="text-3xl relative bottom-20 right-12">Astral</h3>
+          <h3 className="text-3xl relative bottom-20 right-12 ml-10">Astral</h3>
         </div>
         <div>
           <h3 className="text-lg font-semibold">Acerca de</h3>

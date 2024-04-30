@@ -2,6 +2,7 @@ import { IProducto } from "@/interfaces/IProducto";
 import Link from "next/link";
 
 const Cards: React.FC<IProducto> = ({
+  id,
   name,
   description,
   price,
@@ -20,11 +21,15 @@ const Cards: React.FC<IProducto> = ({
         <p className="text-gray-300 mb-2 text-xs">{description}</p>
         <p className="text-green-300 font-bold">${price}</p>
         <p className="text-gray-300 mt-2">Stock: {stock}</p>
-        <Link href="#">
-          <button className="border-2 border-orange-400 text-orange-400 px-4 py-2 rounded-md mt-4 ">
-            Comprar
+        <Link href={`/Productos/${id}`} key={name}>
+          <button className="border-2 border-orange-400 text-orange-400 px-4 py-2 rounded-xl mt-4 mr-5">
+            Mas detalles
           </button>
         </Link>
+
+        <button className=" border-2 border-purple-600 text-purple-600 px-4 py-2 rounded-xl mt-4  hover:bg-purple-500">
+          Comprar
+        </button>
       </div>
     </div>
   );
