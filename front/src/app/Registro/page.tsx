@@ -15,7 +15,7 @@ const Registro = () => {
             Login here!
           </Link>
         </p>
-        <div className="md:absolute left-40 top-0">
+        <div className="md:absolute left-52 ">
           <Image src="/Persona.png" alt="Persona" width="200" height="60" />
         </div>
       </div>
@@ -50,10 +50,8 @@ const Registro = () => {
         <button className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto">
           Register
         </button>
-        <p className="text-center md:text-left text-xs text-gray-300">
-          or continue with
-        </p>
-        <div className="flex justify-center md:justify-start mt-5">
+        <p className="text-center  text-xs text-gray-300">or continue with</p>
+        <div className="flex justify-center  mt-5">
           <Image
             src="/FacebookLogin.png"
             alt="Facebook"
