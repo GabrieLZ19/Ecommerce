@@ -94,9 +94,11 @@ const NavBar: React.FC = () => {
           </Link>
         </div>
         <div className="flex justify-center pt-5 md:pt-0">
-          <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10">
-            Login
-          </button>
+          <Link href="/Login">
+            <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </nav>
