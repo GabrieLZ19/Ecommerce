@@ -1,10 +1,10 @@
 import { IProducto } from "@/interfaces/IProducto";
+
 import Link from "next/link";
 
 const Cards: React.FC<IProducto> = ({
   id,
   name,
-  description,
   price,
   stock,
   image,

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { productsToPreLoad } from "../../../helpers/productos";
+import Image from "next/image";
 
 const Detalle = ({ params }: { params: { detalle: string } }) => {
   const [number, setNumber] = useState(1);
@@ -57,10 +58,12 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
             Calcular Envio
           </button>
           <div className="relative">
-            <img
+            <Image
               src="/carrito.png"
               alt="carrito"
-              className="absolute bottom-2 left-2 w-5"
+              width="20"
+              height="20"
+              className="absolute bottom-2 left-2"
             />
             <button className="border-2 border-purple-600 text-purple-600 mt-5 mr-10 rounded p-1 pl-8 hover:text-white hover:bg-purple-600">
               Agregar

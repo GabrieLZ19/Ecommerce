@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const NavBar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ const NavBar: React.FC = () => {
     <nav className="flex flex-col md:flex-row md:items-center md:justify-around text-white border-b border-gray-600">
       <div className="flex items-center justify-between w-full md:w-auto px-4 py-2">
         <Link href="/">
-          <img src="/Logo.png" alt="logo" className="w-20" />
+          <Image src="/Logo.png" alt="logo" width={60} height={20} />
         </Link>
         <button className="md:hidden" onClick={toggleMenu}>
           {menuOpen ? "Cerrar" : "Menu"}
@@ -78,20 +79,22 @@ const NavBar: React.FC = () => {
             type="text"
             className="rounded bg-transparent border pr-7 py-1 text-sm"
           />
-          <img
+          <Image
             src="/search.svg"
             alt="search"
-            className="absolute right-20 h-8 cursor-pointer p-2 right-5 "
+            width={38}
+            height={40}
+            className="absolute  cursor-pointer p-2 right-5 "
           />
         </div>
 
         <div className="pt-5 flex items-center justify-center md:pt-0 md:mr-40">
           <Link href="/Carrito">
-            <img src="/carrito.png" alt="carrito" className="w-5" />
+            <Image src="/carrito.png" alt="carrito" width={20} height={20} />
           </Link>
         </div>
         <div className="flex justify-center pt-5 md:pt-0">
-          <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl mb-5 md:mb-0 md:mr-10">
+          <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10">
             Login
           </button>
         </div>

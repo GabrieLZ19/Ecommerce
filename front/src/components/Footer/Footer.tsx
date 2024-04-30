@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-t from-gray-900 via-gray-800 to-black border-t border-gray-600 pt-5 mt-10">
@@ -58,9 +60,27 @@ const Footer = () => {
       </div>
 
       <div className="flex items-center w-4/5 border-t border-gray-500 m-auto mt-10 pb-10 ">
-        <img src="/Facebook.png" alt="Facebook" className="mt-10 mx-5 w-8" />
-        <img src="/GitHub.png" alt="GitHub" className="mt-10 mx-5 w-8" />
-        <img src="/Instagram.png" alt="Instagram" className="mt-10 mx-5 w-8" />
+        <Image
+          src="/Facebook.png"
+          alt="Facebook"
+          width="25"
+          height="30"
+          className="mt-10 mx-5 "
+        />
+        <Image
+          src="/GitHub.png"
+          alt="GitHub"
+          width="25"
+          height="30"
+          className="mt-10 mx-5 "
+        />
+        <Image
+          src="/Instagram.png"
+          alt="Instagram"
+          width="25"
+          height="30"
+          className="mt-10 mx-5 "
+        />
       </div>
     </footer>
   );
