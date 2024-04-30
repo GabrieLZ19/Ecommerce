@@ -18,7 +18,7 @@ const Cards: React.FC<IProducto> = ({
           {name}
         </h2>
         <p className="mb-2">{categoryId} </p>
-        <p className="text-gray-300 mb-2 text-xs">{description}</p>
+
         <p className="text-green-300 font-bold">${price}</p>
         <p className="text-gray-300 mt-2">Stock: {stock}</p>
         <Link href={`/Productos/${id}`} key={name}>
