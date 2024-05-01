@@ -8,10 +8,10 @@ import Swal from "sweetalert2";
 const Registro = () => {
   const [form, setForm] = useState({
     email: "",
-    username: "",
+    name: "",
     telefono: "",
+    address: "",
     password: "",
-    confirmPassword: "",
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,10 +32,10 @@ const Registro = () => {
   const isFormValid = () => {
     return (
       form.email !== "" &&
-      form.username !== "" &&
+      form.name !== "" &&
       form.telefono !== "" &&
-      form.password !== "" &&
-      form.confirmPassword !== ""
+      form.address !== "" &&
+      form.password !== ""
     );
   };
 
@@ -72,10 +72,10 @@ const Registro = () => {
         />
         <input
           type="text"
-          name="username"
-          value={form.username}
+          name="name"
+          value={form.name}
           onChange={handleChange}
-          placeholder="Create username"
+          placeholder="Enter name"
           className="rounded-md mb-3 text-black"
         />
         <input
@@ -87,6 +87,14 @@ const Registro = () => {
           className="rounded-md mb-3 text-black"
         />
         <input
+          type="text"
+          name="address"
+          value={form.address}
+          onChange={handleChange}
+          placeholder="Enter address"
+          className="rounded-md mb-3 text-black"
+        />
+        <input
           type="password"
           name="password"
           value={form.password}
@@ -94,14 +102,7 @@ const Registro = () => {
           placeholder="Password"
           className="rounded-md mb-3 text-black"
         />
-        <input
-          type="password"
-          name="confirmPassword"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          placeholder="Confirm Password"
-          className="rounded-md mb-3 text-black"
-        />
+
         <button
           className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto disabled:bg-gray-500 disabled:shadow-none"
           disabled={!isFormValid()}

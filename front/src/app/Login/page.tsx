@@ -54,7 +54,7 @@ const Login = () => {
           name="email"
           value={form.email}
           onChange={handleChange}
-          placeholder="Enter email or username"
+          placeholder="Email"
           className="rounded-md mb-3 text-black"
         />
         <input

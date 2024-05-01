@@ -5,7 +5,7 @@ export const validarForm = (user, name, value) => {
   const emailRegex =
     /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
-  user.map((users) => {
+  user.map((users: any) => {
     if (users.credential.username === value && name === "username") {
       mensaje = "Usuario ya registrado";
     }
