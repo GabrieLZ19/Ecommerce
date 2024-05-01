@@ -1,7 +1,44 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 const Registro = () => {
+  const [form, setForm] = useState({
+    email: "",
+    username: "",
+    telefono: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Good job!",
+      text: "Registro exitoso!",
+      icon: "success",
+    });
+  };
+
+  const isFormValid = () => {
+    return (
+      form.email !== "" &&
+      form.username !== "" &&
+      form.telefono !== "" &&
+      form.password !== "" &&
+      form.confirmPassword !== ""
+    );
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-center items-center md:items-start mx-4 md:mx-40 mb-10 md:mb-20  md:mt-20 sm:mt-0 ">
       <div className="flex flex-col md:w-1/2 md:ml-20 mt-10 md:mt-0 relative text-center md:text-left ">
@@ -20,34 +57,55 @@ const Registro = () => {
         </div>
       </div>
 
-      <form className="flex flex-col w-full md:w-auto mt-10 md:mt-0">
+      <form
+        className="flex flex-col  w-full md:w-auto mt-10 md:mt-0"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-xl mb-5">Sign Up</h1>
         <input
           type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
           placeholder="Enter Email"
-          className="rounded-md mb-3"
+          className="rounded-md mb-3 text-black"
         />
         <input
           type="text"
-          placeholder="Create User name"
-          className="rounded-md mb-3"
+          name="username"
+          value={form.username}
+          onChange={handleChange}
+          placeholder="Create username"
+          className="rounded-md mb-3 text-black"
         />
         <input
           type="number"
+          name="telefono"
+          value={form.telefono}
+          onChange={handleChange}
           placeholder="Contact number"
-          className="rounded-md mb-3"
+          className="rounded-md mb-3 text-black"
         />
         <input
           type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
           placeholder="Password"
-          className="rounded-md mb-3"
+          className="rounded-md mb-3 text-black"
         />
         <input
           type="password"
+          name="confirmPassword"
+          value={form.confirmPassword}
+          onChange={handleChange}
           placeholder="Confirm Password"
-          className="rounded-md mb-3"
+          className="rounded-md mb-3 text-black"
         />
-        <button className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto">
+        <button
+          className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto disabled:bg-gray-500 disabled:shadow-none"
+          disabled={!isFormValid()}
+        >
           Register
         </button>
         <p className="text-center  text-xs text-gray-300">or continue with</p>
