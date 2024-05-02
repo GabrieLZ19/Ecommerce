@@ -1,27 +1,22 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { productsToPreLoad } from "../../../helpers/productos";
+// import { useState } from "react";
 import Image from "next/image";
+import { getProductsById } from "@/helpers/products.helper";
 
-const Detalle = ({ params }: { params: { detalle: string } }) => {
-  const [number, setNumber] = useState(1);
-  const id = params.detalle;
+const Detalle = async ({ params }: { params: { detalle: string } }) => {
+  // const [number, setNumber] = useState(1);
 
-  const producto = productsToPreLoad.find(
-    (producto) => producto.id == parseInt(id)
-  );
+  const producto = await getProductsById(params.detalle);
 
-  const decrementNumber = () => {
-    if (number > 1) {
-      setNumber(number - 1);
-    }
-  };
+  // const decrementNumber = () => {
+  //   if (number > 1) {
+  //     setNumber(number - 1);
+  //   }
+  // };
 
-  const incrementNumber = () => {
-    setNumber(number + 1);
-  };
+  // const incrementNumber = () => {
+  //   setNumber(number + 1);
+  // };
 
   return (
     <>
@@ -35,17 +30,13 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
             <h2 className="mb-5 text-green-500">${producto?.price} </h2>
           </div>
           <div className="flex mt-5">
-            <button onClick={decrementNumber} className="bg-green-400 px-2">
-              -
-            </button>
+            <button className="bg-green-400 px-2">-</button>
             <input
               type="text"
-              value={number}
+              value={1}
               className=" text-center bg-transparent w-28 border-green-400"
             />
-            <button onClick={incrementNumber} className="bg-green-400 px-2">
-              +
-            </button>
+            <button className="bg-green-400 px-2">+</button>
           </div>
 
           <Link
