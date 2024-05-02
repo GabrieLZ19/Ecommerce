@@ -69,6 +69,7 @@ const Registro = () => {
           onChange={handleChange}
           placeholder="Enter Email"
           className="rounded-md mb-3 text-black"
+          required
         />
         <input
           type="text"
@@ -77,6 +78,7 @@ const Registro = () => {
           onChange={handleChange}
           placeholder="Enter name"
           className="rounded-md mb-3 text-black"
+          required
         />
         <input
           type="number"
@@ -85,6 +87,7 @@ const Registro = () => {
           onChange={handleChange}
           placeholder="Contact number"
           className="rounded-md mb-3 text-black"
+          required
         />
         <input
           type="text"
@@ -93,6 +96,7 @@ const Registro = () => {
           onChange={handleChange}
           placeholder="Enter address"
           className="rounded-md mb-3 text-black"
+          required
         />
         <input
           type="password"
@@ -101,6 +105,7 @@ const Registro = () => {
           onChange={handleChange}
           placeholder="Password"
           className="rounded-md mb-3 text-black"
+          required
         />
 
         <button

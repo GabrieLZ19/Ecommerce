@@ -56,6 +56,7 @@ const Login = () => {
           onChange={handleChange}
           placeholder="Email"
           className="rounded-md mb-3 text-black"
+          required
         />
         <input
           type="password"
@@ -64,6 +65,7 @@ const Login = () => {
           onChange={handleChange}
           placeholder="Password"
           className="rounded-md mb-3 text-black"
+          required
         />
         <p className="text-xs text-right text-gray-500 mb-5">
           Forgot password?

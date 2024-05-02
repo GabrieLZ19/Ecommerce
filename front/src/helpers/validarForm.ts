@@ -6,15 +6,8 @@ export const validarForm = (user, name, value) => {
     /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
   user.map((users: any) => {
-    if (users.credential.username === value && name === "username") {
-      mensaje = "Usuario ya registrado";
-    }
     if (users.email === value && name === "email") {
       mensaje = "Email ya registrado";
-    }
-
-    if (users.nDni === parseInt(value) && name === "nDni") {
-      mensaje = "DNI ya registrado";
     }
 
     if (name === "password" && !passRegex.test(value)) {
