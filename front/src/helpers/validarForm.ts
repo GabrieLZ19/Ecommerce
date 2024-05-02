@@ -1,3 +1,5 @@
+import { ILogin } from "@/interfaces/ILogin";
+
 export const validarForm = (user, name, value) => {
   let mensaje = "";
 
@@ -21,4 +23,18 @@ export const validarForm = (user, name, value) => {
   });
 
   return mensaje;
+};
+
+export const validarLogin = (values: ILogin) => {
+  let errors: any = {};
+
+  if (!values.email) {
+    errors.email = "El email es obligatorio";
+  }
+
+  if (!values.password) {
+    errors.password = "La contraseña es obligatoria";
+  }
+
+  return errors;
 };

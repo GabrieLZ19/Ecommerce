@@ -1,14 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { validarLogin } from "@/helpers/validarForm";
 
 const Login = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+
+  const [errorUser, setErrorUser] = useState<any>({ email: "", password: "" });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isDisabled = !form.email || !form.password;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,9 +27,16 @@ const Login = () => {
     console.log("sii", form);
   };
 
-  const isLoginValid = () => {
-    return form.email !== "" && form.password !== "";
+  useEffect(() => {
+    const errors = validarLogin(form);
+
+    setErrorUser(errors);
+  }, [form]);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
+
   return (
     <div className="flex flex-col md:flex-row justify-center items-center md:items-start mx-4 md:px-40 mb-10 md:mb-20 md:mt-20">
       <div className="flex flex-col md:w-1/2 md:ml-20 mt-10 md:mt-0 relative text-center md:text-left">
@@ -58,21 +72,41 @@ const Login = () => {
           className="rounded-md mb-3 text-black"
           required
         />
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Password"
-          className="rounded-md mb-3 text-black"
-          required
-        />
+        {errorUser.email && <p> {errorUser.email} </p>}
+
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="rounded-md mb-3 text-black pr-10 w-full"
+            required
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 flex items-center px-3 bg-transparent"
+          >
+            <Image
+              src={showPassword ? "/ver.png" : "/no-ver.png"}
+              alt="ver"
+              width={25}
+              height={30}
+              className="cursor-pointer mb-2"
+            />
+          </button>
+        </div>
+
+        {errorUser.password && <p> {errorUser.password} </p>}
+
         <p className="text-xs text-right text-gray-500 mb-5">
           Forgot password?
         </p>
 
         <button
-          disabled={!isLoginValid()}
+          disabled={isDisabled}
           className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto disabled:bg-gray-500 disabled:shadow-none"
         >
           Login
