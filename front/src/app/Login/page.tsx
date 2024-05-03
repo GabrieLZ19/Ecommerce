@@ -7,18 +7,26 @@ import Link from "next/link";
 import { validarLogin } from "@/helpers/validarForm";
 import { LoginUser } from "@/helpers/users.helper";
 import Swal from "sweetalert2";
+import { IToken } from "@/interfaces/IToken";
+import { ILogin } from "@/interfaces/ILogin";
 
-const Login = ({ token, setToken }: any) => {
+const Login = ({ token, setToken }: IToken) => {
   const router = useRouter();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ILogin>({
     email: "",
     password: "",
   });
 
-  const [errorUser, setErrorUser] = useState<any>({ email: "", password: "" });
+  const [errorUser, setErrorUser] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
 
-  const [touchedFields, setTouchedFields] = useState<any>({});
+  const [touchedFields, setTouchedFields] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
 
   const [showPassword, setShowPassword] = useState(false);
 

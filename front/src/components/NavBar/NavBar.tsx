@@ -1,15 +1,20 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { IToken } from "@/interfaces/IToken";
 
-const NavBar: React.FC = ({ token, setToken }: any) => {
+const NavBar = ({ token, setToken }: IToken) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
 
   const logOutHandler = () => {
@@ -98,17 +103,28 @@ const NavBar: React.FC = ({ token, setToken }: any) => {
             <Image src="/carrito.png" alt="carrito" width={20} height={20} />
           </Link>
         </div>
-        <div className="flex justify-center pt-5 md:pt-0">
-          {token ? (
+
+        {token && (
+          <div className="flex flex-col items-center justify-center pt-5 md:pt-0 md:mr-10 relative">
             <button
-              type="submit"
-              onClick={logOutHandler}
-              className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10"
+              className="p-2 rounded-full shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10"
+              onClick={toggleDropdown}
             >
-              Log out
+              <Image src="/usuario.webp" alt="usuario" width="40" height="40" />
             </button>
-          ) : null}
-        </div>
+            {showDropdown && (
+              <div className="absolute right-22 top-20 md:top-14 md:right-0 mt-2  overflow-hidden z-10 w-28 text-center bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow-purple-500/50 ">
+                <button
+                  type="submit"
+                  onClick={logOutHandler}
+                  className="p-2 text-gray-800 hover:bg-purple-400 w-28"
+                >
+                  Log out
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </nav>
   );

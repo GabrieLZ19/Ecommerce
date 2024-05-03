@@ -6,6 +6,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { Register } from "@/helpers/users.helper";
 import { validarForm } from "@/helpers/validarForm";
+import { ILogin } from "@/interfaces/ILogin";
 
 const Registro = () => {
   const [form, setForm] = useState({
@@ -16,8 +17,16 @@ const Registro = () => {
     password: "",
   });
 
-  const [errorUser, setErrorUser] = useState<any>({ email: "", password: "" });
-  const [touchedFields, setTouchedFields] = useState<any>({});
+  const [errorUser, setErrorUser] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
+  const [touchedFields, setTouchedFields] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const isFormValid =
     !form.email || !form.name || !form.phone || !form.address || !form.password;
@@ -26,6 +35,10 @@ const Registro = () => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
     setTouchedFields({ ...touchedFields, [name]: true });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   useEffect(() => {
@@ -37,23 +50,33 @@ const Registro = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    try {
-      const forms = {
-        ...form,
-        phone: parseInt(form.phone),
-      };
-      await Register(forms);
+    const errores = validarForm(form);
+
+    if (Object.keys(errores).length === 0) {
+      try {
+        const forms = {
+          ...form,
+          phone: parseInt(form.phone),
+        };
+        await Register(forms);
+        Swal.fire({
+          title: "¡Buen trabajo!",
+          text: "¡Registro exitoso!",
+          icon: "success",
+        });
+      } catch (error: any) {
+        Swal.fire({
+          title: "¡Ups...",
+          text: "¡Algo salió mal durante el registro!",
+          icon: "error",
+          footer: error.message,
+        });
+      }
+    } else {
       Swal.fire({
-        title: "Good job!",
-        text: "Registro exitoso!",
-        icon: "success",
-      });
-    } catch (error: any) {
-      Swal.fire({
+        title: "¡Oops...",
+        text: "¡Algo salió mal!",
         icon: "error",
-        title: "Oops...",
-        text: "Algo salió mal!",
-        footer: error,
       });
     }
   };
@@ -119,15 +142,30 @@ const Registro = () => {
           className="rounded-md mb-3 text-black"
           required
         />
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Password"
-          className="rounded-md mb-3 text-black"
-          required
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Password"
+            className="rounded-md mb-3 text-black pr-10 w-full"
+            required
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 flex items-center px-3 bg-transparent"
+          >
+            <Image
+              src={showPassword ? "/ver.png" : "/no-ver.png"}
+              alt="ver"
+              width={25}
+              height={30}
+              className="cursor-pointer mb-2"
+            />
+          </button>
+        </div>
         {touchedFields.password && errorUser.password && (
           <p> {errorUser.password} </p>
         )}
