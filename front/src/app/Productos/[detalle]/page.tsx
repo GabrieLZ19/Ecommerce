@@ -1,22 +1,27 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-// import { useState } from "react";
 import Image from "next/image";
 import { getProductsById } from "@/helpers/products.helper";
+import AgregarProduct from "@/components/AgregarProduct/AgregarProduct";
+import { IProducto } from "@/interfaces/IProducto";
 
-const Detalle = async ({ params }: { params: { detalle: string } }) => {
-  // const [number, setNumber] = useState(1);
+const Detalle = ({ params }: { params: { detalle: string } }) => {
+  const [producto, setProducto] = useState<IProducto>();
 
-  const producto = await getProductsById(params.detalle);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productData = await getProductsById(params.detalle);
+        setProducto(productData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // const decrementNumber = () => {
-  //   if (number > 1) {
-  //     setNumber(number - 1);
-  //   }
-  // };
-
-  // const incrementNumber = () => {
-  //   setNumber(number + 1);
-  // };
+    fetchData();
+  }, [params.detalle]);
 
   return (
     <>
@@ -29,15 +34,8 @@ const Detalle = async ({ params }: { params: { detalle: string } }) => {
             <h1 className="mb-5 text-2xl">{producto?.name} </h1>
             <h2 className="mb-5 text-green-500">${producto?.price} </h2>
           </div>
-          <div className="flex mt-5">
-            <button className="bg-green-400 px-2">-</button>
-            <input
-              type="text"
-              value={1}
-              className=" text-center bg-transparent w-28 border-green-400"
-            />
-            <button className="bg-green-400 px-2">+</button>
-          </div>
+
+          <AgregarProduct />
 
           <Link
             href="#"
@@ -56,6 +54,7 @@ const Detalle = async ({ params }: { params: { detalle: string } }) => {
               height="20"
               className="absolute bottom-2 left-2"
             />
+
             <button className="border-2 border-purple-600 text-purple-600 mt-5 mr-10 rounded p-1 pl-8 hover:text-white hover:bg-purple-600">
               Agregar
             </button>

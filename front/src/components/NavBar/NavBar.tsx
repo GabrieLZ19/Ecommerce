@@ -76,7 +76,7 @@ const NavBar: React.FC = ({ token, setToken }: any) => {
             )}
           </li>
 
-          <li className="py-2">Populares</li>
+          <li className="py-2">Dashboard</li>
         </ul>
 
         <div className="relative flex items-center justify-center  w-64 m-auto">
