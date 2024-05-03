@@ -1,17 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { validarLogin } from "@/helpers/validarForm";
+import { LoginUser } from "@/helpers/users.helper";
+import Swal from "sweetalert2";
 
-const Login = () => {
+const Login = ({ token, setToken }: any) => {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const [errorUser, setErrorUser] = useState<any>({ email: "", password: "" });
+
+  const [touchedFields, setTouchedFields] = useState<any>({});
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -20,11 +27,7 @@ const Login = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log("sii", form);
+    setTouchedFields({ ...touchedFields, [name]: true });
   };
 
   useEffect(() => {
@@ -35,6 +38,24 @@ const Login = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      await LoginUser(form, setToken);
+
+      router.push("/");
+    } catch (error: any) {
+      console.log("Error");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: error.message,
+      });
+    }
   };
 
   return (
@@ -72,7 +93,7 @@ const Login = () => {
           className="rounded-md mb-3 text-black"
           required
         />
-        {errorUser.email && <p> {errorUser.email} </p>}
+        {touchedFields.email && errorUser.email && <p> {errorUser.email} </p>}
 
         <div className="relative">
           <input
@@ -99,7 +120,9 @@ const Login = () => {
           </button>
         </div>
 
-        {errorUser.password && <p> {errorUser.password} </p>}
+        {touchedFields.password && errorUser.password && (
+          <p> {errorUser.password} </p>
+        )}
 
         <p className="text-xs text-right text-gray-500 mb-5">
           Forgot password?

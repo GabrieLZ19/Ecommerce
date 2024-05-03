@@ -1,42 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { Register } from "@/helpers/users.helper";
+import { validarForm } from "@/helpers/validarForm";
 
 const Registro = () => {
   const [form, setForm] = useState({
     email: "",
     name: "",
-    telefono: "",
+    phone: "",
     address: "",
     password: "",
   });
 
+  const [errorUser, setErrorUser] = useState<any>({ email: "", password: "" });
+  const [touchedFields, setTouchedFields] = useState<any>({});
+
+  const isFormValid =
+    !form.email || !form.name || !form.phone || !form.address || !form.password;
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
+    setTouchedFields({ ...touchedFields, [name]: true });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const errors = validarForm(form);
+
+    setErrorUser(errors);
+  }, [form]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    Swal.fire({
-      title: "Good job!",
-      text: "Registro exitoso!",
-      icon: "success",
-    });
-  };
-
-  const isFormValid = () => {
-    return (
-      form.email !== "" &&
-      form.name !== "" &&
-      form.telefono !== "" &&
-      form.address !== "" &&
-      form.password !== ""
-    );
+    try {
+      const forms = {
+        ...form,
+        phone: parseInt(form.phone),
+      };
+      await Register(forms);
+      Swal.fire({
+        title: "Good job!",
+        text: "Registro exitoso!",
+        icon: "success",
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: error,
+      });
+    }
   };
 
   return (
@@ -71,6 +90,8 @@ const Registro = () => {
           className="rounded-md mb-3 text-black"
           required
         />
+
+        {touchedFields.email && errorUser.email && <p> {errorUser.email} </p>}
         <input
           type="text"
           name="name"
@@ -82,8 +103,8 @@ const Registro = () => {
         />
         <input
           type="number"
-          name="telefono"
-          value={form.telefono}
+          name="phone"
+          value={form.phone}
           onChange={handleChange}
           placeholder="Contact number"
           className="rounded-md mb-3 text-black"
@@ -107,10 +128,14 @@ const Registro = () => {
           className="rounded-md mb-3 text-black"
           required
         />
+        {touchedFields.password && errorUser.password && (
+          <p> {errorUser.password} </p>
+        )}
 
         <button
           className="bg-purple-700 rounded-md p-2 mt-2 mb-10 shadow-md shadow-purple-500/50 w-full md:w-auto disabled:bg-gray-500 disabled:shadow-none"
-          disabled={!isFormValid()}
+          disabled={isFormValid}
+          type="submit"
         >
           Register
         </button>

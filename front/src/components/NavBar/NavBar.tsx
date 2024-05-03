@@ -4,12 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC = ({ token, setToken }: any) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const logOutHandler = () => {
+    setToken(null);
+    localStorage.clear();
   };
 
   const handleMouseEnter = () => {
@@ -94,11 +99,15 @@ const NavBar: React.FC = () => {
           </Link>
         </div>
         <div className="flex justify-center pt-5 md:pt-0">
-          <Link href="/Login">
-            <button className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10">
-              Login
+          {token ? (
+            <button
+              type="submit"
+              onClick={logOutHandler}
+              className="bg-gradient-to-r from-violet-600 to-indigo-600 p-2 rounded-2xl shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10"
+            >
+              Log out
             </button>
-          </Link>
+          ) : null}
         </div>
       </div>
     </nav>
