@@ -1,7 +1,28 @@
+"use client";
+
 import AgregarProduct from "@/components/AgregarProduct/AgregarProduct";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const Carrito = () => {
+  const [productosEnCarrito, setProductosEnCarrito] = useState([]);
+
+  useEffect(() => {
+    const carritoGuardado = localStorage.getItem("Carrito");
+
+    if (carritoGuardado) {
+      const productos = JSON.parse(carritoGuardado);
+      console.log(productos);
+      setProductosEnCarrito(productos);
+    }
+  }, []);
+
+  const eliminarProducto = (index: number) => {
+    let carrito = [...productosEnCarrito];
+    carrito.splice(index, 1);
+    localStorage.setItem("Carrito", JSON.stringify(carrito));
+    setProductosEnCarrito(carrito);
+  };
+
   return (
     <>
       <div className="mx-auto max-w-4xl px-4 mb-52 mt-20">
@@ -13,32 +34,37 @@ const Carrito = () => {
             <p className="font-medium">Total</p>
           </div>
         </div>
-        <div className="flex justify-between border-b border-gray-500 mt-4">
-          <div className="flex items-center gap-4 w-2/5">
-            <Image
-              src="/Auriculares.png"
-              alt="imagen"
-              width="100"
-              height="40"
-            />
-            <div>
-              <p className="text-xs sm:text-xl font-medium">
-                Nombre del producto
-              </p>
-              <p className="text-sm text-purple-600 hover:underline hover:cursor-pointer">
-                Eliminar
-              </p>
+        {productosEnCarrito.map((producto, index) => (
+          <div
+            key={index}
+            className="flex justify-between border-b border-gray-500 mt-4 py-5"
+          >
+            <div className="flex items-center gap-4 w-2/5">
+              <img
+                src={producto?.image}
+                alt="imagen"
+                className="w-1/3
+                rounded-xl"
+              />
+              <div>
+                <p className="text-xs sm:text-xl font-medium">
+                  {producto.name}
+                </p>
+                <p
+                  onClick={() => eliminarProducto(index)}
+                  className="text-sm text-purple-600 hover:underline hover:cursor-pointer"
+                >
+                  Eliminar
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between w-1/2 gap-1 mt-2 sm:mt-0 ">
+              <p className="text-xs sm:text-xl">${producto.price}</p>
+              <AgregarProduct />
+              <p className="text-xs sm:text-xl">${producto.price}</p>
             </div>
           </div>
-          <div className="flex items-center justify-between w-1/2 gap-1 mt-2 sm:mt-0 ">
-            <p className="text-xs sm:text-xl">$Precio</p>
-
-            <AgregarProduct />
-
-            <p className="text-xs sm:text-xl">$Total</p>
-          </div>
-        </div>
-
+        ))}
         <div className="mt-6 flex justify-end">
           <button className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg px-4 py-2">
             Pagar

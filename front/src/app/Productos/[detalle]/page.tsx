@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getProductsById } from "@/helpers/products.helper";
-import AgregarProduct from "@/components/AgregarProduct/AgregarProduct";
 import { IProducto } from "@/interfaces/IProducto";
 
-const Detalle = ({ params }: { params: { detalle: string } }) => {
+const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
   const [producto, setProducto] = useState<IProducto>();
 
   useEffect(() => {
@@ -22,12 +21,22 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
 
     fetchData();
   }, [params.detalle]);
+  const agregarAlCarrito = () => {
+    let carrito: any[] = JSON.parse(localStorage.getItem("Carrito") || "[]");
 
+    carrito.push(producto);
+
+    localStorage.setItem("Carrito", JSON.stringify(carrito));
+  };
   return (
     <>
       <div className="flex justify-around mt-16 w-2/3 mx-auto ">
-        <div className="">
-          <img src={producto?.image} alt="Producto" />
+        <div className="flex justify-center items-center">
+          <img
+            src={producto?.image}
+            alt="Producto"
+            className="rounded-xl w-2/3"
+          />
         </div>
         <div className="border-l border-gray-600 px-10  w-1/2 flex flex-col items-start ">
           <div>
@@ -35,7 +44,12 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
             <h2 className="mb-5 text-green-500">${producto?.price} </h2>
           </div>
 
-          <AgregarProduct />
+          <button
+            onClick={agregarAlCarrito}
+            className="border-2 border-purple-600 text-purple-600 mt-5 mr-10 rounded p-1 hover:text-white hover:bg-purple-600"
+          >
+            Agregar al carrito
+          </button>
 
           <Link
             href="#"
@@ -54,10 +68,6 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
               height="20"
               className="absolute bottom-2 left-2"
             />
-
-            <button className="border-2 border-purple-600 text-purple-600 mt-5 mr-10 rounded p-1 pl-8 hover:text-white hover:bg-purple-600">
-              Agregar
-            </button>
           </div>
         </div>
       </div>
@@ -68,4 +78,4 @@ const Detalle = ({ params }: { params: { detalle: string } }) => {
   );
 };
 
-export default Detalle;
+export default DetalleProducto;

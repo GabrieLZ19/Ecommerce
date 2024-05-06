@@ -12,7 +12,7 @@ const Cards: React.FC<IProducto> = ({
 }) => {
   return (
     <div className="bg-gray-900 text-white rounded-lg shadow-md">
-      <img src={image} alt={name} className="w-full h-auto rounded-t-lg" />
+      <img src={image} alt={name} className="w-full h-1/2 rounded-t-lg" />
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-2" style={{ color: "#624DE3" }}>
           {name}
