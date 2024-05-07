@@ -7,13 +7,13 @@ import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
-  const [token, setToken] = useState(localStorage.getItem("userToken") ?? null);
+  const [token, setToken] = useState(localStorage.getItem("userToken") || null);
 
   return (
     <>
-      {token ? <NavBar token={token} setToken={setToken} /> : null}
-      {token ? <HomePage /> : <Login token={token} setToken={setToken} />}
-      {token ? <Footer /> : null}
+      {token && <NavBar token={token} setToken={setToken} />}
+      {token ? <HomePage /> : <Login setToken={setToken} />}
+      {token && <Footer />}
     </>
   );
 }

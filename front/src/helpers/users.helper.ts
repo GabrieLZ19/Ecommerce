@@ -1,5 +1,6 @@
 import { ILogin } from "@/interfaces/ILogin";
 import { IRegister } from "@/interfaces/IRegister";
+import { IToken } from "@/interfaces/IToken";
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 export async function Register(user: IRegister) {
   try {
@@ -39,6 +40,7 @@ export async function LoginUser(user: ILogin, setToken: any) {
     }
 
     const login = await res.json();
+
     setToken(login.token);
     localStorage.setItem("userToken", login.token);
 

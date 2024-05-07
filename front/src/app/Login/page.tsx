@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { IToken } from "@/interfaces/IToken";
 import { ILogin } from "@/interfaces/ILogin";
 
-const Login = ({ token, setToken }: IToken) => {
+const Login = ({ setToken }: IToken) => {
   const router = useRouter();
 
   const [form, setForm] = useState<ILogin>({
@@ -56,7 +56,6 @@ const Login = ({ token, setToken }: IToken) => {
 
       router.push("/");
     } catch (error: any) {
-      console.log("Error");
       Swal.fire({
         icon: "error",
         title: "Oops...",

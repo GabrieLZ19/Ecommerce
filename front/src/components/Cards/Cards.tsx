@@ -1,3 +1,4 @@
+import categoriasPreLoad from "@/helpers/categoriasPreLoad";
 import { IProducto } from "@/interfaces/IProducto";
 
 import Link from "next/link";
@@ -10,6 +11,7 @@ const Cards: React.FC<IProducto> = ({
   image,
   categoryId,
 }) => {
+  console.log();
   return (
     <div className="bg-gray-900 text-white rounded-lg shadow-md">
       <img src={image} alt={name} className="w-full h-1/2 rounded-t-lg" />
@@ -17,7 +19,7 @@ const Cards: React.FC<IProducto> = ({
         <h2 className="text-xl font-semibold mb-2" style={{ color: "#624DE3" }}>
           {name}
         </h2>
-        <p className="mb-2">{categoryId} </p>
+        <p className="mb-2">{categoriasPreLoad[categoryId].name} </p>
 
         <p className="text-green-300 font-bold">${price}</p>
         <p className="text-gray-300 mt-2">Stock: {stock}</p>
