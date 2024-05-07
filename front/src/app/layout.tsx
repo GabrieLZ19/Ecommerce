@@ -15,12 +15,15 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  token: string | null;
 }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
         <NavBar />
+
         {children}
+
         <Footer />
       </body>
     </html>

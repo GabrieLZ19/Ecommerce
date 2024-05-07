@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 
 const Carrito = () => {
   const [productosEnCarrito, setProductosEnCarrito] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const carritoGuardado = localStorage.getItem("Carrito");
 
     if (carritoGuardado) {
       const productos = JSON.parse(carritoGuardado);
-      console.log(productos);
+
       setProductosEnCarrito(productos);
     }
   }, []);
@@ -21,6 +22,22 @@ const Carrito = () => {
     carrito.splice(index, 1);
     localStorage.setItem("Carrito", JSON.stringify(carrito));
     setProductosEnCarrito(carrito);
+  };
+
+  const calcularTotal = (carrito: any) => {
+    let totalCarrito = 0;
+    carrito.forEach((producto: any) => {
+      totalCarrito += producto.price * producto.quantity;
+    });
+    setTotal(totalCarrito);
+  };
+
+  const actualizarCantidad = (index: number, cantidad: number) => {
+    let carrito = [...productosEnCarrito];
+    carrito[index].quantity = cantidad;
+    localStorage.setItem("Carrito", JSON.stringify(carrito));
+    setProductosEnCarrito(carrito);
+    calcularTotal(carrito);
   };
 
   return (
@@ -60,12 +77,22 @@ const Carrito = () => {
             </div>
             <div className="flex items-center justify-between w-1/2 gap-1 mt-2 sm:mt-0 ">
               <p className="text-xs sm:text-xl">${producto.price}</p>
-              <AgregarProduct />
-              <p className="text-xs sm:text-xl">${producto.price}</p>
+              <AgregarProduct
+                cantidad={producto.quantity}
+                actualizarCantidad={(cantidad: number) =>
+                  actualizarCantidad(index, cantidad)
+                }
+              />
+              <p className="text-xs sm:text-xl">
+                ${producto.price * producto.quantity}
+              </p>
             </div>
           </div>
         ))}
         <div className="mt-6 flex justify-end">
+          <p className="font-medium flex justify-center items-center mr-10">
+            Total: ${total}
+          </p>
           <button className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg px-4 py-2">
             Pagar
           </button>

@@ -7,11 +7,11 @@ import Link from "next/link";
 import { validarLogin } from "@/helpers/validarForm";
 import { LoginUser } from "@/helpers/users.helper";
 import Swal from "sweetalert2";
-import { IToken } from "@/interfaces/IToken";
 import { ILogin } from "@/interfaces/ILogin";
 
-const Login = ({ setToken }: IToken) => {
+const Login = () => {
   const router = useRouter();
+  const [token, setToken] = useState(localStorage.getItem("userToken") || null);
 
   const [form, setForm] = useState<ILogin>({
     email: "",

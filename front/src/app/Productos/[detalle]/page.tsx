@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProductsById } from "@/helpers/products.helper";
 import { IProducto } from "@/interfaces/IProducto";
+import Swal from "sweetalert2";
 
 const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
   const [producto, setProducto] = useState<IProducto>();
@@ -22,11 +23,36 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
     fetchData();
   }, [params.detalle]);
   const agregarAlCarrito = () => {
-    let carrito: any[] = JSON.parse(localStorage.getItem("Carrito") || "[]");
+    Swal.fire({
+      title: "Desea agregar el producto al Carrito?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Si",
+      denyButtonText: `No,gracias`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let carrito: any[] = JSON.parse(
+          localStorage.getItem("Carrito") || "[]"
+        );
 
-    carrito.push(producto);
+        carrito.push(producto);
 
-    localStorage.setItem("Carrito", JSON.stringify(carrito));
+        localStorage.setItem("Carrito", JSON.stringify(carrito));
+
+        Swal.fire({
+          title: "Producto agregado!",
+          icon: "success",
+        });
+      } else if (result.isDenied) {
+        Swal.fire({
+          text: "Sigue explorando nuestro productos.",
+          imageUrl:
+            "https://cdn.dribbble.com/users/1628055/screenshots/4381061/media/4737dbf293920273b5720e6aacdfbe20.gif",
+          imageWidth: 300,
+          imageHeight: 300,
+        });
+      }
+    });
   };
   return (
     <>

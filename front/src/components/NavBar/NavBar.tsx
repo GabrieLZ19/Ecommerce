@@ -1,13 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IToken } from "@/interfaces/IToken";
 
-const NavBar = ({ token, setToken }: IToken) => {
+const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [userToken, setUserToken] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+
+    if (token) {
+      setUserToken(token);
+    }
+  }, [userToken]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -17,9 +25,19 @@ const NavBar = ({ token, setToken }: IToken) => {
     setShowDropdown(!showDropdown);
   };
 
-  const logOutHandler = () => {
-    setToken(null);
-    localStorage.clear();
+  const handleLogin = () => {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      setUserToken(token);
+    }
+    setShowDropdown(false);
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("userToken");
+    setUserToken("");
+    setShowDropdown(false);
+    localStorage.removeItem("Carrito");
   };
 
   const handleMouseEnter = () => {
@@ -104,27 +122,36 @@ const NavBar = ({ token, setToken }: IToken) => {
           </Link>
         </div>
 
-        {token && (
-          <div className="flex flex-col items-center justify-center pt-5 md:pt-0 md:mr-10 relative">
-            <button
-              className="p-2 rounded-full shadow-md shadow-purple-500/50 mb-5 md:mb-0 md:mr-10"
-              onClick={toggleDropdown}
-            >
-              <Image src="/usuario.webp" alt="usuario" width="40" height="40" />
-            </button>
-            {showDropdown && (
-              <div className="absolute right-22 top-20 md:top-14 md:right-0 mt-2  overflow-hidden z-10 w-28 text-center bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow-purple-500/50 ">
+        <div className="flex flex-col items-center justify-center pt-5 md:pt-0 md:mr-10 relative">
+          <button
+            className="p-2 rounded-full shadow-md  mb-5 md:mb-0 md:mr-10"
+            onClick={toggleDropdown}
+          >
+            <Image src="/usuario.webp" alt="usuario" width="30" height="30" />
+          </button>
+          {showDropdown && (
+            <div className="absolute right-22 top-20 md:top-14 md:right-0 mt-2  overflow-hidden z-10 w-28 text-center bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow-purple-500/50 ">
+              {userToken ? (
                 <button
                   type="submit"
-                  onClick={logOutHandler}
+                  onClick={handleLogOut}
                   className="p-2 text-gray-800 hover:bg-purple-400 w-28"
                 >
                   Log out
                 </button>
-              </div>
-            )}
-          </div>
-        )}
+              ) : (
+                <Link href="/Login">
+                  <button
+                    onClick={handleLogin}
+                    className="p-2 text-gray-800 hover:bg-purple-400 w-28"
+                  >
+                    Log in
+                  </button>
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

@@ -40,9 +40,11 @@ export async function LoginUser(user: ILogin, setToken: any) {
     }
 
     const login = await res.json();
+    console.log(login);
 
     setToken(login.token);
     localStorage.setItem("userToken", login.token);
+    // localStorage.setItem("userSesion", JSON.stringify(login.user));
 
     return login;
   } catch (error: any) {
