@@ -9,8 +9,12 @@ import Swal from "sweetalert2";
 
 const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
   const [producto, setProducto] = useState<IProducto>();
+  const [userTokenPresent, setUserTokenPresent] = useState(false);
 
   useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+    setUserTokenPresent(!!userToken);
+
     const fetchData = async () => {
       try {
         const productData = await getProductsById(params.detalle);
@@ -22,13 +26,23 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
 
     fetchData();
   }, [params.detalle]);
+
   const agregarAlCarrito = () => {
+    if (!userTokenPresent) {
+      Swal.fire({
+        title: "Debe iniciar sesión primero",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
+      return;
+    }
+
     Swal.fire({
-      title: "Desea agregar el producto al Carrito?",
+      title: "¿Desea agregar el producto al Carrito?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Si",
-      denyButtonText: `No,gracias`,
+      confirmButtonText: "Sí",
+      denyButtonText: "No, gracias",
     }).then((result) => {
       if (result.isConfirmed) {
         let carrito: any[] = JSON.parse(
@@ -40,12 +54,12 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
         localStorage.setItem("Carrito", JSON.stringify(carrito));
 
         Swal.fire({
-          title: "Producto agregado!",
+          title: "¡Producto agregado!",
           icon: "success",
         });
       } else if (result.isDenied) {
         Swal.fire({
-          text: "Sigue explorando nuestro productos.",
+          text: "Siga explorando nuestros productos.",
           imageUrl:
             "https://cdn.dribbble.com/users/1628055/screenshots/4381061/media/4737dbf293920273b5720e6aacdfbe20.gif",
           imageWidth: 300,
@@ -54,6 +68,7 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
       }
     });
   };
+
   return (
     <>
       <div className="flex justify-around mt-16 w-2/3 mx-auto ">
@@ -64,7 +79,7 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
             className="rounded-xl w-2/3"
           />
         </div>
-        <div className="border-l border-gray-600 px-10  w-1/2 flex flex-col items-start ">
+        <div className="border-l border-gray-600 px-10 w-1/2 flex flex-col items-start ">
           <div>
             <h1 className="mb-5 text-2xl">{producto?.name} </h1>
             <h2 className="mb-5 text-green-500">${producto?.price} </h2>
@@ -84,7 +99,7 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
             Comprar
           </Link>
           <button className="border-2 border-purple-600 text-purple-600 mt-5 mr-10 rounded p-1 hover:text-white hover:bg-purple-600">
-            Calcular Envio
+            Calcular Envío
           </button>
           <div className="relative">
             <Image

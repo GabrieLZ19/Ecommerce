@@ -24,7 +24,9 @@ export async function Register(user: IRegister) {
   }
 }
 
-export async function LoginUser(user: ILogin, setToken: any) {
+export async function LoginUser(
+  user: ILogin
+): Promise<{ token: string; user: any }> {
   try {
     const res = await fetch(`${apiURL}/users/login`, {
       method: "POST",
@@ -40,11 +42,6 @@ export async function LoginUser(user: ILogin, setToken: any) {
     }
 
     const login = await res.json();
-    console.log(login);
-
-    setToken(login.token);
-    localStorage.setItem("userToken", login.token);
-    // localStorage.setItem("userSesion", JSON.stringify(login.user));
 
     return login;
   } catch (error: any) {

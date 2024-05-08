@@ -2,20 +2,24 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 
 const NavBar = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [userToken, setUserToken] = useState("");
+  const [userToken, setUserToken] = useState();
+  const [userSesion, setUserSesion] = useState();
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-
-    if (token) {
-      setUserToken(token);
+    const userTokens = localStorage.getItem("userToken");
+    if (userTokens !== null) {
+      setUserToken(userTokens);
     }
-  }, [userToken]);
+  }, [pathname]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -25,19 +29,15 @@ const NavBar = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleLogin = () => {
-    const token = localStorage.getItem("userToken");
-    if (token) {
-      setUserToken(token);
-    }
-    setShowDropdown(false);
-  };
-
   const handleLogOut = () => {
     localStorage.removeItem("userToken");
-    setUserToken("");
-    setShowDropdown(false);
     localStorage.removeItem("Carrito");
+    localStorage.removeItem("userSesion");
+    setShowDropdown(false);
+
+    setUserToken(null);
+    setUserSesion(null);
+    router.push("/");
   };
 
   const handleMouseEnter = () => {
@@ -116,11 +116,13 @@ const NavBar = () => {
           />
         </div>
 
-        <div className="pt-5 flex items-center justify-center md:pt-0 md:mr-40">
-          <Link href="/Carrito">
-            <Image src="/carrito.png" alt="carrito" width={20} height={20} />
-          </Link>
-        </div>
+        {userToken && (
+          <div className="pt-5 flex items-center justify-center md:pt-0 md:mr-40">
+            <Link href="/Carrito">
+              <Image src="/carrito.png" alt="carrito" width={20} height={20} />
+            </Link>
+          </div>
+        )}
 
         <div className="flex flex-col items-center justify-center pt-5 md:pt-0 md:mr-10 relative">
           <button
@@ -129,27 +131,33 @@ const NavBar = () => {
           >
             <Image src="/usuario.webp" alt="usuario" width="30" height="30" />
           </button>
+
           {showDropdown && (
-            <div className="absolute right-22 top-20 md:top-14 md:right-0 mt-2  overflow-hidden z-10 w-28 text-center bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow-purple-500/50 ">
-              {userToken ? (
-                <button
-                  type="submit"
-                  onClick={handleLogOut}
-                  className="p-2 text-gray-800 hover:bg-purple-400 w-28"
-                >
-                  Log out
-                </button>
-              ) : (
-                <Link href="/Login">
+            <>
+              {userToken && userSesion && (
+                <p className="text-white relative right-3">
+                  {userSesion?.name}
+                </p>
+              )}
+
+              <div className="absolute right-22 top-20 md:top-14 md:right-0 mt-4  overflow-hidden z-10 w-28 text-center bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg shadow-purple-500/50 ">
+                {userToken ? (
                   <button
-                    onClick={handleLogin}
+                    type="submit"
+                    onClick={handleLogOut}
                     className="p-2 text-gray-800 hover:bg-purple-400 w-28"
                   >
-                    Log in
+                    Log out
                   </button>
-                </Link>
-              )}
-            </div>
+                ) : (
+                  <Link href="/Login">
+                    <button className="p-2 text-gray-800 hover:bg-purple-400 w-28">
+                      Log in
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>

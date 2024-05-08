@@ -11,6 +11,7 @@ import { ILogin } from "@/interfaces/ILogin";
 
 const Login = () => {
   const router = useRouter();
+
   const [token, setToken] = useState(localStorage.getItem("userToken") || null);
 
   const [form, setForm] = useState<ILogin>({
@@ -52,7 +53,10 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      await LoginUser(form, setToken);
+      const loginResponse = await LoginUser(form);
+      localStorage.setItem("userToken", loginResponse.token);
+      localStorage.setItem("userSesion", JSON.stringify(loginResponse.user));
+      setToken(loginResponse.token);
 
       router.push("/");
     } catch (error: any) {
