@@ -2,25 +2,44 @@
 
 import AgregarProduct from "@/components/AgregarProduct/AgregarProduct";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const Carrito = () => {
   const [productosEnCarrito, setProductosEnCarrito] = useState([]);
   const [total, setTotal] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const carritoGuardado = localStorage.getItem("Carrito");
+    const userSesion = localStorage.getItem("userSesion");
+    if (userSesion) {
+      const userData = JSON.parse(userSesion);
+      const userId = userData.id;
+      console.log(userId);
 
-    if (carritoGuardado) {
-      const productos = JSON.parse(carritoGuardado);
+      const carritoGuardado = localStorage.getItem(`Carrito_${userId}`);
 
-      setProductosEnCarrito(productos);
+      if (carritoGuardado) {
+        const productos = JSON.parse(carritoGuardado);
+        setProductosEnCarrito(productos);
+        calcularTotal(productos);
+      }
     }
   }, []);
+
+  const guardarCarrito = (carrito: any) => {
+    const userSesion = localStorage.getItem("userSesion");
+    if (userSesion) {
+      const userData = JSON.parse(userSesion);
+      const userId = userData.id;
+
+      localStorage.setItem(`Carrito_${userId}`, JSON.stringify(carrito));
+    }
+  };
 
   const eliminarProducto = (index: number) => {
     let carrito = [...productosEnCarrito];
     carrito.splice(index, 1);
-    localStorage.setItem("Carrito", JSON.stringify(carrito));
+    guardarCarrito(carrito);
     setProductosEnCarrito(carrito);
   };
 
@@ -32,10 +51,10 @@ const Carrito = () => {
     setTotal(totalCarrito);
   };
 
-  const actualizarCantidad = (index: number, cantidad: number) => {
+  const actualizarCantidad = (index, cantidad) => {
     let carrito = [...productosEnCarrito];
     carrito[index].quantity = cantidad;
-    localStorage.setItem("Carrito", JSON.stringify(carrito));
+    guardarCarrito(carrito);
     setProductosEnCarrito(carrito);
     calcularTotal(carrito);
   };

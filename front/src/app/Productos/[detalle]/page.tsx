@@ -45,18 +45,24 @@ const DetalleProducto = ({ params }: { params: { detalle: string } }) => {
       denyButtonText: "No, gracias",
     }).then((result) => {
       if (result.isConfirmed) {
-        let carrito: any[] = JSON.parse(
-          localStorage.getItem("Carrito") || "[]"
-        );
+        const userSesion = localStorage.getItem("userSesion");
+        if (userSesion) {
+          const userData = JSON.parse(userSesion);
+          const userId = userData.id;
 
-        carrito.push(producto);
+          let carrito: any[] = JSON.parse(
+            localStorage.getItem(`Carrito_${userId}`) || "[]"
+          );
 
-        localStorage.setItem("Carrito", JSON.stringify(carrito));
+          carrito.push(producto);
 
-        Swal.fire({
-          title: "¡Producto agregado!",
-          icon: "success",
-        });
+          localStorage.setItem(`Carrito_${userId}`, JSON.stringify(carrito));
+
+          Swal.fire({
+            title: "¡Producto agregado!",
+            icon: "success",
+          });
+        }
       } else if (result.isDenied) {
         Swal.fire({
           text: "Siga explorando nuestros productos.",

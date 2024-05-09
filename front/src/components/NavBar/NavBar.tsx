@@ -31,7 +31,6 @@ const NavBar = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("userToken");
-    localStorage.removeItem("Carrito");
     localStorage.removeItem("userSesion");
     setShowDropdown(false);
 
