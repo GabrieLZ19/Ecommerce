@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -9,6 +10,8 @@ import { validarForm } from "@/helpers/validarForm";
 import { ILogin } from "@/interfaces/ILogin";
 
 const Registro = () => {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -64,6 +67,8 @@ const Registro = () => {
           text: "¡Registro exitoso!",
           icon: "success",
         });
+
+        router.push("/Login");
       } catch (error: any) {
         Swal.fire({
           title: "¡Ups...",

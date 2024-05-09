@@ -16,8 +16,10 @@ const NavBar = () => {
 
   useEffect(() => {
     const userTokens = localStorage.getItem("userToken");
-    if (userTokens !== null) {
+    const userSesions = localStorage.getItem("userSesion");
+    if (userTokens !== null && userSesions !== null) {
       setUserToken(userTokens);
+      setUserSesion(JSON.parse(userSesions));
     }
   }, [pathname]);
 
@@ -97,8 +99,11 @@ const NavBar = () => {
               </ul>
             )}
           </li>
-
-          <li className="py-2">Dashboard</li>
+          {userToken && (
+            <Link href="/Dashboard">
+              <li className="py-2">Dashboard</li>
+            </Link>
+          )}
         </ul>
 
         <div className="relative flex items-center justify-center  w-64 m-auto">
@@ -134,8 +139,8 @@ const NavBar = () => {
           {showDropdown && (
             <>
               {userToken && userSesion && (
-                <p className="text-white relative right-3">
-                  {userSesion?.name}
+                <p className="text-white relative right-5 ">
+                  {userSesion.name}
                 </p>
               )}
 
