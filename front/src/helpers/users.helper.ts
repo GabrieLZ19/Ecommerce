@@ -48,3 +48,20 @@ export async function LoginUser(
     throw new Error(`${error.message}`);
   }
 }
+
+export async function getOrders(userToken: string) {
+  try {
+    const res = await fetch(`${apiURL}/users/orders`, {
+      method: "GET",
+      headers: {
+        Authorization: userToken,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const orders = await res.json();
+    return orders;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
